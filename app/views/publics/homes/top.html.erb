@@ -1,0 +1,4 @@
+top page
+<% @subjects.each do |subject| %>
+    <%= link_to "#{subject.name}", subject_path(subject.id) %>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_with model:@subject_new, url:admins_questions_path, local:true do |f| %>
+    <%= f.collection_select :subject_id, Subject.all, :id, :name %>
+    <%= f.label :atatement %>
+    <%= f.text_field :atatement %>
+    <%= f.select :correct_answer, [['◯',0],['×',1]], { include_blank: true, selected: 0 } %>
+    <%= f.label :commentaly %>
+    <%= f.text_field :commentaly %>
+    <%= f.submit '保存' %>
+<% end %>

@@ -1,0 +1,5 @@
+top page
+<a class="navbar-brand" href="/admins/subjects/new">科目を作成する</a>
+<% @subjects.each do |subject| %>
+    <%= link_to "#{subject.name}", admins_subject_path(subject.id) %>
+<% end %>

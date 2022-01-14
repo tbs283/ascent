@@ -1,32 +1,26 @@
 Rails.application.routes.draw do
-  devise_for :customers
-  devise_for :admins
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-    namespace :admin do
-    get 'top' => 'admin/homes#top'
-    resources :subjects, only: [:show] do
-      resources :question_one, only: [:create]
-      resources :question_two, only: [:create]
-    end
+  namespace :admins do
+    resources :subjects, only: [:new, :create, :edit, :update, :show, :destroy]
+    resources :questions, only: [:new, :create, :edit, :update, :show, :destroy]
+    resources :manyquestions, only: [:new, :create, :edit, :update, :show, :destroy]
   end
-#   devise_for :admins, controllers: {
-#   sessions: 'admins/sessions',
-#   passwords: 'admins/passwords',
-#   registrations: 'admins/registrations'
-#   }
+  get 'admin/top' => 'admins/homes#top'
+  devise_for :admins, controllers: {
+  sessions: 'admins/sessions',
+  passwords: 'admins/passwords',
+  registrations: 'admins/registrations'
+  }
 
 
   # public routing
-  get 'top' => 'public/homes#top'
-  get 'about' => 'public/homes#about'
-  resources :subjects, only: [:show] do
-    resources :tests, only: [:new, :create, :edit, :update, :show, :destroy] do
-      resources :results, only: [:new, :create, :edit, :update, :show, :destroy]
+  get '/' => 'publics/homes#top'
+  get 'about' => 'publics/homes#about'
+  scope module: :publics do
+    resources :subjects, only: [:show] do
+        get 'tests' => 'tests#test'
+        resources :tests, only: [:create] do
+            resources :results, only: [:create]
+        end
     end
   end
-#   devise_for :publics, controllers: {
-#   sessions:      'publics/sessions',
-#   passwords:     'publics/passwords',
-#   registrations: 'publics/registrations'
-#   }
 end
